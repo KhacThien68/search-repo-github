@@ -1,5 +1,44 @@
+//  import reset css
+@import './reset.scss';
+
 // import layouts styles
 @import './layouts/index.scss';
 
 // import components styles
 @import './components/index.scss';
+
+html {
+  overflow: hidden;
+  font-size: 12px;
+}
+
+* {
+  user-select: none;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "SFProDisplay";
+  padding: 0;
+  margin: 0;
+  font-weight: 400;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+}
+
+::-webkit-scrollbar {
+  opacity: 0;
+  width: 17px;
+  height: 17px;
+}
+
+::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+
+a {
+  text-decoration: none;
+}
