@@ -1,0 +1,17 @@
+.userInfoContainer {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+
+  img {
+    object-fit: cover;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+  }
+
+  p {
+    margin-left: 8px;
+    font-weight: 600;
+  }
+}
