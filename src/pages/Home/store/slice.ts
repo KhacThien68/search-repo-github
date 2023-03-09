@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { RootState } from '../../../app/store'
 import { HomePageState } from './interfaces'
-import { getRepositories } from './thunk'
+import { getUsers } from './thunk'
 
 export const slice = createSlice({
   name: 'homePage',
@@ -28,17 +28,17 @@ export const slice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(getRepositories.pending, (state) => {
+    builder.addCase(getUsers.pending, (state) => {
       state.isLoading = true
     })
-    builder.addCase(getRepositories.fulfilled, (state, action) => {
+    builder.addCase(getUsers.fulfilled, (state, action) => {
       state.isLoading = false
       const data = action.payload
       state.data = data.items
 
       state.totalRecords = data.total_count || 0
     })
-    builder.addCase(getRepositories.rejected, (state) => {
+    builder.addCase(getUsers.rejected, (state) => {
       state.isLoading = false
     })
   },

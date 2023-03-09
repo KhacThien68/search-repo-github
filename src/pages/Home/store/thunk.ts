@@ -1,11 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { GetReposParams } from './interfaces'
+import { GetUsersParams } from './interfaces'
 import HomePageServiceExport from './service'
 
-export const getRepositories = createAsyncThunk(
-  'getRepositories',
-  async (params: GetReposParams, { rejectWithValue }) => {
-    const response: any = await HomePageServiceExport.getRepositories(params)
+export const getUsers = createAsyncThunk(
+  'getUsers',
+  async (params: GetUsersParams, { rejectWithValue }) => {
+    const response: any = await HomePageServiceExport.getUsers(params)
     if (response.total_count) {
       return response
     }

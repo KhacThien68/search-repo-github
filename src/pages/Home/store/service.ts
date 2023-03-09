@@ -3,8 +3,8 @@ import { ServiceBase } from '../../../core/ServiceBase'
 import HomePage from './proxy'
 
 class HomePageService extends ServiceBase {
-  getRepositories(params: any) {
-    return this.getData(() => HomePage.getRepositories(params))
+  getUsers(params: any) {
+    return this.getData(() => HomePage.getUsers(params))
   }
 }
 

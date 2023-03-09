@@ -1,6 +1,6 @@
 import { Input, Pagination, PaginationProps } from 'antd'
 import React, { useEffect, useState } from 'react'
-import { getRepositories } from './store/thunk'
+import { getUsers } from './store/thunk'
 import useDebounce from '../../helpers/useDebounce'
 import classes from './index.module.scss'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
@@ -44,7 +44,7 @@ export default function HomePage() {
   useEffect(() => {
     if (searchCharacters) {
       dispatch(
-        getRepositories({
+        getUsers({
           q: searchCharacters,
           page: page,
           per_page: pageSize,

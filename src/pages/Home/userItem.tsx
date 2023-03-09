@@ -2,10 +2,10 @@ import { Card, Col } from 'antd'
 import Meta from 'antd/lib/card/Meta'
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { RepoItem } from './store/interfaces'
+import { UserRepoItem } from './store/interfaces'
 
 type Props = {
-  value: RepoItem
+  value: UserRepoItem
 }
 
 export const UserItem: React.FC<Props> = ({ value }) => {

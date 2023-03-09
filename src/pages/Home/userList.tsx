@@ -1,9 +1,9 @@
 import { Row } from 'antd'
-import { RepoItem } from './store/interfaces'
+import { UserRepoItem } from './store/interfaces'
 import { UserItem } from './userItem'
 
 type Props = {
-  value: RepoItem[]
+  value: UserRepoItem[]
 }
 
 export const UserList: React.FC<Props> = ({ value }) => {

@@ -1,10 +1,10 @@
 import { PaginationParams } from "../../../app/interfaces"
 
-export interface GetReposParams extends PaginationParams {
+export interface GetUsersParams extends PaginationParams {
   q: string
 }
 
-export interface RepoItem {
+export interface UserRepoItem {
   avatar_url: string
   events_url: string
   followers_url: string
@@ -27,7 +27,7 @@ export interface RepoItem {
 }
 
 export interface HomePageState {
-  data: RepoItem[]
+  data: UserRepoItem[]
   page: number
   pageSize: number
   isLoading: boolean
