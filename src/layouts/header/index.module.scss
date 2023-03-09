@@ -6,4 +6,36 @@
   height: 56px;
   background-color: #cccccc;
 
+  .contentRight {
+    display: flex;
+    align-items: center;
+    height: 100%;
+
+    .listMenuContainer {
+      display: flex;
+      margin-left: 12px;
+      height: 100%;
+
+      .menuItem {
+        height: 100%;
+        font-size: 20px;
+        display: flex;
+        align-items: center;
+        padding: 12px;
+
+        &:hover {
+          background-color: #e2e2e2;
+          cursor: pointer;
+        }
+        &.activeItem {
+          border-bottom: 4px solid #2E71FF;
+        }
+      }
+    }
+  }
+}
+
+.logoIcon {
+  height: 48px;
+  padding-left: 8px;
 }

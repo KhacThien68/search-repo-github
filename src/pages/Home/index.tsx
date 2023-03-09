@@ -4,7 +4,16 @@ import { getRepositories } from './store/thunk'
 import useDebounce from '../../helpers/useDebounce'
 import classes from './index.module.scss'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
-import { changePage, changePageSize, selectData, selectPage, selectPageSize, selectTotalRecords } from './store/slice'
+import {
+  changePage,
+  changePageSize,
+  changeSearchCharacters,
+  selectData,
+  selectPage,
+  selectPageSize,
+  selectSearchCharacters,
+  selectTotalRecords,
+} from './store/slice'
 import { UserList } from './userList'
 
 export default function HomePage() {
@@ -12,6 +21,7 @@ export default function HomePage() {
   const [search, setSearch] = useState('')
 
   // useSelector
+  const searchCharacters = useAppSelector(selectSearchCharacters)
   const totalRecords = useAppSelector(selectTotalRecords)
   const usersData = useAppSelector(selectData)
   const page = useAppSelector(selectPage)
@@ -23,7 +33,7 @@ export default function HomePage() {
     current,
     newPageSize,
   ) => {
-    if(current !== page) {
+    if (current !== page) {
       dispatch(changePage(current))
     }
     if (newPageSize !== pageSize) {
@@ -31,25 +41,24 @@ export default function HomePage() {
     }
   }
 
-  const handleSearch = (searchCharacters: string) => {
+  useEffect(() => {
     if (searchCharacters) {
       dispatch(
         getRepositories({
           q: searchCharacters,
-          page: 1,
-          per_page: 10,
+          page: page,
+          per_page: pageSize,
         }),
       )
-    } 
-  }
+    }
+    //eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, pageSize, searchCharacters])
 
   const debouncedSearch = useDebounce(search, 1000)
 
   useEffect(() => {
-    if (debouncedSearch) {
-      handleSearch(debouncedSearch)
-      dispatch(changePage(1))
-    }
+    dispatch(changeSearchCharacters(debouncedSearch))
+    dispatch(changePage(1))
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedSearch])
 

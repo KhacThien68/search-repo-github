@@ -11,10 +11,14 @@ export const slice = createSlice({
     pageSize: 10,
     isLoading: false,
     totalRecords: 0,
+    searchCharacters: '',
   } as HomePageState,
   reducers: {
     changeData: (state, action) => {
       state.data = action.payload
+    },
+    changeSearchCharacters: (state, action) => {
+      state.searchCharacters = action.payload
     },
     changePage: (state, action) => {
       state.page = action.payload
@@ -45,7 +49,14 @@ export const selectTotalRecords = (state: RootState) =>
 export const selectData = (state: RootState) => state[slice.name].data
 export const selectPage = (state: RootState) => state[slice.name].page
 export const selectPageSize = (state: RootState) => state[slice.name].pageSize
+export const selectSearchCharacters = (state: RootState) =>
+  state[slice.name].searchCharacters
 
-export const { changeData, changePage, changePageSize } = slice.actions
+export const {
+  changeData,
+  changeSearchCharacters,
+  changePage,
+  changePageSize,
+} = slice.actions
 
 export const HomePageReducer = slice.reducer

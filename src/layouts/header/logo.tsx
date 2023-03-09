@@ -1,5 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { ROUTER } from '../../router/config'
+import logoIconFull from '../../assets/logo/logoIconFull.png'
+import classes from './index.module.scss'
 
 export const Logo = () => {
   const navigate = useNavigate()
@@ -9,6 +11,8 @@ export const Logo = () => {
   }
 
   return (
-    <div onClick={onClick}>Thiên</div>
+    <div onClick={onClick}>
+      <img src={logoIconFull} alt="logo icon" className={classes.logoIcon} />
+    </div>
   )
 }

@@ -32,4 +32,11 @@ export interface HomePageState {
   pageSize: number
   isLoading: boolean
   totalRecords: number
+  searchCharacters: string
+}
+
+export interface MenuItem {
+  title: string
+  path: string
+  key: number
 }
