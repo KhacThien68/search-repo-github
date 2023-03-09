@@ -1,19 +1,20 @@
-import React from "react";
-import Footer from "./footer";
-import Header from "./header";
+import React from 'react'
+import Footer from './footer'
+import Header from './header'
+import classes from './index.module.scss'
 
 type LayoutProps = {
-  children: React.ReactNode;
-};
+  children: React.ReactNode
+}
 
 const Layout = ({ children }: LayoutProps) => {
   return (
-    <>
+    <div className={classes.layoutContainer}>
       <Header />
-      <main>{children}</main>
+      <main className={classes.mainContent}>{children}</main>
       <Footer />
-    </>
-  );
-};
+    </div>
+  )
+}
 
-export default Layout;
+export default Layout

@@ -25,3 +25,11 @@ export interface RepoItem {
   type: string
   url: string
 }
+
+export interface HomePageState {
+  data: RepoItem[]
+  page: number
+  pageSize: number
+  isLoading: boolean
+  totalRecords: number
+}

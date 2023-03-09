@@ -2,7 +2,7 @@ import ProxyBase from "../../../core/ProxyBase"
 
 export class HomePageProxy extends ProxyBase {
   getRepositories(params: any) {
-    return this.get('users', params)
+    return this.get('', params)
   }
 }
 

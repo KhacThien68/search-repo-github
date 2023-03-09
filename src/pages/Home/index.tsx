@@ -1,75 +1,61 @@
-import { Input } from 'antd'
+import { Input, Pagination, PaginationProps } from 'antd'
 import React, { useEffect, useState } from 'react'
+import { getRepositories } from './store/thunk'
 import useDebounce from '../../helpers/useDebounce'
+import classes from './index.module.scss'
+import { useAppDispatch, useAppSelector } from '../../app/hooks'
+import { changePage, changePageSize, selectData, selectPage, selectPageSize, selectTotalRecords } from './store/slice'
+import { UserList } from './userList'
 
 export default function HomePage() {
+  const dispatch = useAppDispatch()
   const [search, setSearch] = useState('')
-  const [totalResult, setTotalResult] = useState(0)
-  const [users, setUsers] = useState([])
-  const [page, setPage] = useState(1)
+
+  // useSelector
+  const totalRecords = useAppSelector(selectTotalRecords)
+  const usersData = useAppSelector(selectData)
+  const page = useAppSelector(selectPage)
+  const pageSize = useAppSelector(selectPageSize)
+
+  console.log(usersData)
+
+  const onChangePagination: PaginationProps['onChange'] = (
+    current,
+    newPageSize,
+  ) => {
+    if(current !== page) {
+      dispatch(changePage(current))
+    }
+    if (newPageSize !== pageSize) {
+      dispatch(changePageSize(newPageSize))
+    }
+  }
 
   const handleSearch = (searchCharacters: string) => {
     if (searchCharacters) {
-      // if (searchCharacters) {
-      //   fetch(
-      //     `https://api.github.com/search/users?q=${searchCharacters}&page=1`,
-      //     {
-      //       method: 'GET',
-      //     },
-      //   )
-      //     .then((response) => response.json())
-      //     .then((data) => {
-      //       if (data.total_count !== undefined) {
-      //         setTotalResult(data.total_count)
-      //         return setUsers((pre) => [...pre, ...data.items])
-      //       }
-      //     })
-      //     .catch((error) => console.log(error))
-      // }
-    } else {
-      // return []
-    }
+      dispatch(
+        getRepositories({
+          q: searchCharacters,
+          page: 1,
+          per_page: 10,
+        }),
+      )
+    } 
   }
 
   const debouncedSearch = useDebounce(search, 1000)
 
   useEffect(() => {
     if (debouncedSearch) {
-      setPage(1)
-      if (search) {
-        setUsers([])
-        handleSearch(debouncedSearch)
-      }
-    } else {
-      setTotalResult(0)
-      setUsers([])
+      handleSearch(debouncedSearch)
+      dispatch(changePage(1))
     }
-  }, [debouncedSearch, search])
+    //eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedSearch])
 
-  useEffect(() => {
-    if (search) {
-      // fetch(`https://api.github.com/search/users?q=${search}&page=${page}`, {
-      //   method: 'GET',
-      // })
-      //   .then((response) => response.json())
-      //   .then((data) => {
-      //     if (page === 1) {
-      //       return setUsers(data.items)
-      //     } else if (data.items) {
-      //       return setUsers((prev) => [...prev, ...data.items])
-      //     } else {
-      //       setUsers(users)
-      //     }
-      //   })
-      //   .catch((error) => console.error(error))
-    } else {
-      // setTotalResult(0)
-      // setUsers([])
-    }
-  }, [page, search])
   return (
-    <div className="home-page">
-      <div className="search-header">
+    <div className={classes.homePage}>
+      <div className={classes.searchHeader}>
         <div className="github-icon_container">Khắc Thiện</div>
         <h1>Khắc Thiện</h1>
         <Input
@@ -85,16 +71,18 @@ export default function HomePage() {
           onChange={(e) => setSearch(e.target.value)}
         />
       </div>
-      <div>Tìm kiếm kết quả cho: {search}</div>
-      <div>Số kết quả tìm kiếm được: {totalResult}</div>
-
-      {/* <InfiniteScroll
-        dataLength={users.length} //This is important field to render the next data
-        next={() => setPage((pre) => pre + 1)}
-        hasMore={users.length < totalResult}
-      >
-        <UserList value={users} />
-      </InfiniteScroll> */}
+      <div>Tìm kiếm kết quả cho: {debouncedSearch}</div>
+      <div>Số kết quả tìm kiếm được: {totalRecords}</div>
+      <UserList value={usersData} />
+      <Pagination
+        showSizeChanger
+        onChange={onChangePagination}
+        total={totalRecords}
+        pageSize={pageSize}
+        defaultCurrent={1}
+        hideOnSinglePage
+        current={page}
+      />
     </div>
   )
 }
