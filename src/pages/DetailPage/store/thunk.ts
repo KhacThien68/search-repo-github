@@ -6,9 +6,7 @@ export const getDetailUser = createAsyncThunk(
   'getDetailUser',
   async (params: GetDetailUserParams, { rejectWithValue }) => {
     const response: any = await DetailUserServiceExport.getDetailUser(params)
-    if (response) {
-      console.log(response)
-      
+    if (response) {      
       return response
     }
     return rejectWithValue(response.errors)

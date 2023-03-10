@@ -3,8 +3,11 @@ import { Button, Card, Modal } from 'antd'
 import React, { useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import rehypeRaw from 'rehype-raw'
+import { useAppDispatch, useAppSelector } from '../../../../app/hooks'
 import { RepoItem } from '../../store/interfaces'
 import classes from './CardItem.module.scss'
+import { changeReadmeContent, selectReadmeContent } from './store/slice'
+import { getReadMeDetail } from './store/thunk'
 
 type Props = {
   repo: RepoItem
@@ -12,24 +15,20 @@ type Props = {
 }
 
 export const CardItem: React.FC<Props> = ({ repo, userId }) => {
+  const dispatch = useAppDispatch()
   const [isModalVisible, setIsModalVisible] = useState(false)
-  const [readMe, setReadMe] = useState('')
-  const showModal = (selectedRepo: any) => {
+
+  const readmeContent = useAppSelector(selectReadmeContent)
+  const readme = decodeURIComponent(escape(window.atob(readmeContent)))
+
+  const showModal = (selectedRepo: string) => {
     setIsModalVisible(true)
-    setReadMe('')
-    fetch(
-      `https://api.github.com/repos/${userId}/${selectedRepo}/contents/README.md`,
+    dispatch(changeReadmeContent(''))
+    dispatch(
+      getReadMeDetail({
+        url: `repos/${userId}/${selectedRepo}/contents/README.md`,
+      }),
     )
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.content) {
-          return setReadMe(
-            decodeURIComponent(escape(window.atob(data.content))),
-          )
-        } else {
-          setReadMe("This repostory doesn't have README file")
-        }
-      })
   }
 
   const handleOk = () => {
@@ -53,49 +52,37 @@ export const CardItem: React.FC<Props> = ({ repo, userId }) => {
             }}
             twoToneColor="#ffff01"
           />{' '}
-          <span style={{ marginLeft: '10px' }}>{repo.stargazers_count}</span>
+          <span>{repo.stargazers_count}</span>
         </div>
         <div>
           <EyeFilled style={{ fontSize: '20px', color: '#f56e8b' }} />
-          <span style={{ marginLeft: '10px' }}>{repo.watchers_count}</span>
+          <span>{repo.watchers_count}</span>
         </div>
       </div>
-      <p style={{ marginTop: '32px' }}>
-        Language:{' '}
-        {repo.language && (
-          <span
-            style={{
-              backgroundColor: '#f3ff16',
-              padding: '12px',
-              border: '1px solid #ccc',
-              borderRadius: '16px',
-              color: '#163B67',
-              fontWeight: '600',
-              marginLeft: 20,
-            }}
-          >
-            {repo.language}
-          </span>
-        )}
+      <p className={classes.language}>
+        Language: {repo.language && <span>{repo.language}</span>}
       </p>
       <Button
         type="primary"
         onClick={() => showModal(repo.name)}
-        style={{ margin: '20px auto', borderRadius: '8px' }}
+        style={{ width: '100%', margin: '20px auto', borderRadius: '8px' }}
       >
         README
       </Button>
       <Modal
-        title="README"
+        title={<span className={classes.modalTitle}>README</span>}
         open={isModalVisible}
         onOk={handleOk}
+        centered
         onCancel={handleCancel}
-        mask={false}
+        wrapClassName={classes.wrapModel}
+        mask={true}
         width="80%"
         style={{ maxWidth: '1000px', height: '80%' }}
         cancelButtonProps={{ style: { display: 'none' } }}
+        destroyOnClose={true}
       >
-        <ReactMarkdown rehypePlugins={[rehypeRaw]}>{readMe}</ReactMarkdown>
+        <ReactMarkdown rehypePlugins={[rehypeRaw]}>{readme}</ReactMarkdown>
       </Modal>
     </Card>
   )

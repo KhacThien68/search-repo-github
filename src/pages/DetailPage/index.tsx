@@ -15,8 +15,6 @@ export default function DetailRepoUser() {
   // useAppSelector
   const repoList = useAppSelector(selectRepoList)
 
-  console.log(repoList)
-
   useEffect(() => {
     dispatch(changeActiveMenu(0))
     dispatch(getDetailUser({ url: `users/${user.id}/repos` }))

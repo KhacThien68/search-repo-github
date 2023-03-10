@@ -1,9 +1,28 @@
 .watcherStar {
   display: flex;
   justify-content: space-around;
+
+  span {
+    margin-left: 10px;
+  }
 }
 
-.ant-card-head-title {
+.language {
+  margin-top: 32px;
+
+  span {
+    background-color: #f3ff16;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 16px;
+    color: #163b67;
+    font-weight: 600;
+    margin-left: 20px;
+  }
+}
+
+.modalTitle {
+  display: block;
   margin: 0 auto;
   text-align: center;
   width: 100%;
