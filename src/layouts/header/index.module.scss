@@ -1,4 +1,7 @@
 .container {
+  position: sticky;
+  top: 0;
+  z-index: 10;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -28,7 +31,7 @@
           cursor: pointer;
         }
         &.activeItem {
-          border-bottom: 4px solid #2E71FF;
+          border-bottom: 4px solid #2e71ff;
         }
       }
     }

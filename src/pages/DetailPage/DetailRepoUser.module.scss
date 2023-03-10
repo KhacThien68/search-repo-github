@@ -1,0 +1,24 @@
+.repoHeader {
+  width: 100%;
+  height: 100px;
+  position: sticky;
+  top: 56px;
+  z-index: 1;
+  background-color: #ffffff;
+
+  .userName {
+    margin: 0px auto;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    max-width: 1200px;
+    display: flex;
+    align-items: center;
+
+    h1 {
+      margin: 0px auto;
+      padding: 20px;
+      font-size: 36px;
+    }
+  }
+}

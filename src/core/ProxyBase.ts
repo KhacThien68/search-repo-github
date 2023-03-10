@@ -14,7 +14,7 @@ export default class ProxyBase {
     this.baseServiceUrl = url
   }
 
-  get(path: string, data: any) {
+  get(path: string, data?: any) {
     const url = this.baseServiceUrl + path
     const params = { ...data }
 

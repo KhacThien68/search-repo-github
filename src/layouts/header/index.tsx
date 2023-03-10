@@ -1,19 +1,23 @@
-import React, { useState } from 'react'
 import { Logo } from './logo'
 import { UserInfo } from './userInfo'
 import classes from './index.module.scss'
 import { LIST_MENU } from './types'
 import { useNavigate } from 'react-router-dom'
 import { MenuItem } from '../../pages/Home/store/interfaces'
+import { useAppDispatch, useAppSelector } from '../../app/hooks'
+import { changeActiveMenu, selectActiveMenuItem } from '../../app/slice'
 
 const Header = () => {
+  const dispatch = useAppDispatch()
   const navigate = useNavigate()
-  const [activeMenu, setActiveMenu] = useState(1)
+
+  const activeMenuItem = useAppSelector(selectActiveMenuItem)
 
   const handleClick = (item: MenuItem) => {
-    setActiveMenu(item.key)
+    dispatch(changeActiveMenu(item.key))
     navigate(item.path)
   }
+
   return (
     <div className={classes.container}>
       <div className={classes.contentRight}>
@@ -26,7 +30,7 @@ const Header = () => {
                 key={index}
                 className={[
                   classes.menuItem,
-                  `${activeMenu === item.key ? classes.activeItem : ''}`,
+                  `${activeMenuItem === item.key ? classes.activeItem : ''}`,
                 ].join(' ')}
               >
                 <p>{item.title}</p>

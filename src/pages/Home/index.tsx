@@ -15,6 +15,7 @@ import {
   selectTotalRecords,
 } from './store/slice'
 import { UserList } from './userList'
+import { changeActiveMenu } from '../../app/slice'
 
 export default function HomePage() {
   const dispatch = useAppDispatch()
@@ -27,8 +28,6 @@ export default function HomePage() {
   const page = useAppSelector(selectPage)
   const pageSize = useAppSelector(selectPageSize)
 
-  console.log(usersData)
-
   const onChangePagination: PaginationProps['onChange'] = (
     current,
     newPageSize,
@@ -40,6 +39,11 @@ export default function HomePage() {
       dispatch(changePageSize(newPageSize))
     }
   }
+
+  useEffect(() => {
+    dispatch(changeActiveMenu(1))
+    //eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   useEffect(() => {
     if (searchCharacters) {
@@ -80,8 +84,12 @@ export default function HomePage() {
           onChange={(e) => setSearch(e.target.value)}
         />
       </div>
-      <div>Tìm kiếm kết quả cho: {debouncedSearch}</div>
-      <div>Số kết quả tìm kiếm được: {totalRecords}</div>
+      {searchCharacters && (
+        <>
+          <div>Tìm kiếm kết quả cho: {searchCharacters}</div>
+          <div>Số kết quả tìm kiếm được: {totalRecords}</div>
+        </>
+      )}
       <UserList value={usersData} />
       <Pagination
         showSizeChanger

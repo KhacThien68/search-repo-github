@@ -10,6 +10,7 @@ type Props = {
 
 export const UserItem: React.FC<Props> = ({ value }) => {
   const user = value
+
   return (
     <Col
       xs={24}
@@ -27,7 +28,7 @@ export const UserItem: React.FC<Props> = ({ value }) => {
             maxWidth: 300,
             borderRadius: '12px',
             overflow: 'hidden',
-            margin: '0 auto'
+            margin: '0 auto',
           }}
           cover={
             <img
