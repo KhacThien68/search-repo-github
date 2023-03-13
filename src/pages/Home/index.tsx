@@ -16,6 +16,7 @@ import {
 } from './store/slice'
 import { UserList } from './userList'
 import { changeActiveMenu } from '../../app/slice'
+import LogoIcon from '../../assets/logo/logoIcon.png'
 
 export default function HomePage() {
   const dispatch = useAppDispatch()
@@ -69,7 +70,9 @@ export default function HomePage() {
   return (
     <div className={classes.homePage}>
       <div className={classes.searchHeader}>
-        <div className="github-icon_container">Khắc Thiện</div>
+        <div className={classes.iconContainer}>
+          <img src={LogoIcon} alt="github icon" className="github-icon" />
+        </div>
         <h1>Khắc Thiện</h1>
         <Input
           value={search}

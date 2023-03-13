@@ -1,18 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { RootState } from '../../../../../app/store'
+import { RepoItemSate } from './interfaces'
 import { getReadMeDetail } from './thunk'
 
 export const slice = createSlice({
   name: 'repoItem',
   initialState: {
-    data: [],
+    data: {},
     isLoading: false,
     readmeContent: '',
-  },
+  } as RepoItemSate,
   reducers: {
     changeReadmeContent: (state, action) => {
       state.readmeContent = action.payload
-    }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getReadMeDetail.pending, (state) => {
@@ -21,9 +22,8 @@ export const slice = createSlice({
     builder.addCase(getReadMeDetail.fulfilled, (state, action) => {
       state.isLoading = false
       const data = action.payload
-      
+
       state.readmeContent = data.content || ''
-      
     })
     builder.addCase(getReadMeDetail.rejected, (state) => {
       state.isLoading = false

@@ -5,27 +5,14 @@
 }
 
 .searchHeader {
-  height: 280px;
   background-color: rgb(96, 171, 245);
-}
+  padding-bottom: 20px;
 
-.githubIcon {
-  width: 150px;
-  height: 150px;
-}
+  .iconContainer {
+    margin: 0 auto;
 
-.ant-input {
-  font-size: 20px;
-}
-
-.ant-input-clear-icon {
-  font-size: 20px;
-}
-
-.ant-modal-content {
-  box-shadow: none;
-}
-
-.ant-card {
-  margin: 0 auto;
+    img {
+      width: 150px;
+    }
+  }
 }
