@@ -35,6 +35,8 @@ export const selectData = (state: RootState) =>
   state[slice.name].data
 export const selectReadmeContent = (state: RootState) =>
   state[slice.name].readmeContent
+  export const selectIsLoading = (state: RootState) =>
+    state[slice.name].isLoading
 
 export const {changeReadmeContent} = slice.actions
 

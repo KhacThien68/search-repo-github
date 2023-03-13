@@ -26,5 +26,6 @@ export const slice = createSlice({
 })
 
 export const selectRepoList = (state: RootState) => state[slice.name].repoList
+export const selectIsLoading = (state: RootState) => state[slice.name].isLoading
 
 export const DetailPageReducer = slice.reducer

@@ -2,10 +2,11 @@ import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { RepoList } from './RepoList/RepoList'
-import { selectRepoList } from './store/slice'
+import { selectIsLoading, selectRepoList } from './store/slice'
 import { getDetailUser } from './store/thunk'
 import classes from './DetailRepoUser.module.scss'
 import { changeActiveMenu } from '../../app/slice'
+import Spinner from '../../components/Spinner'
 
 export default function DetailRepoUser() {
   const dispatch = useAppDispatch()
@@ -14,6 +15,7 @@ export default function DetailRepoUser() {
 
   // useAppSelector
   const repoList = useAppSelector(selectRepoList)
+  const isLoading = useAppSelector(selectIsLoading)
 
   useEffect(() => {
     dispatch(changeActiveMenu(0))
@@ -28,9 +30,13 @@ export default function DetailRepoUser() {
           <h1>{userId}</h1>
         </div>
       </div>
-      <div>
-        <RepoList list={repoList} userId={userId} />
-      </div>
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <div>
+          <RepoList list={repoList} userId={userId} />
+        </div>
+      )}
     </div>
   )
 }

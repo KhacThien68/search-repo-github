@@ -51,6 +51,7 @@ export const selectPage = (state: RootState) => state[slice.name].page
 export const selectPageSize = (state: RootState) => state[slice.name].pageSize
 export const selectSearchCharacters = (state: RootState) =>
   state[slice.name].searchCharacters
+export const selectIsLoading = (state: RootState) => state[slice.name].isLoading
 
 export const {
   changeData,

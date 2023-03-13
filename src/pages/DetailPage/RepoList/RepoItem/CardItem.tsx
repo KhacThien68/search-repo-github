@@ -4,9 +4,14 @@ import React, { useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import rehypeRaw from 'rehype-raw'
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks'
+import Spinner from '../../../../components/Spinner'
 import { RepoItem } from '../../store/interfaces'
 import classes from './CardItem.module.scss'
-import { changeReadmeContent, selectReadmeContent } from './store/slice'
+import {
+  changeReadmeContent,
+  selectIsLoading,
+  selectReadmeContent,
+} from './store/slice'
 import { getReadMeDetail } from './store/thunk'
 
 type Props = {
@@ -19,6 +24,8 @@ export const CardItem: React.FC<Props> = ({ repo, userId }) => {
   const [isModalVisible, setIsModalVisible] = useState(false)
 
   const readmeContent = useAppSelector(selectReadmeContent)
+  const isLoading = useAppSelector(selectIsLoading)
+
   const readme = decodeURIComponent(escape(window.atob(readmeContent)))
 
   const showModal = (selectedRepo: string) => {
@@ -82,7 +89,11 @@ export const CardItem: React.FC<Props> = ({ repo, userId }) => {
         cancelButtonProps={{ style: { display: 'none' } }}
         destroyOnClose={true}
       >
-        <ReactMarkdown rehypePlugins={[rehypeRaw]}>{readme}</ReactMarkdown>
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          <ReactMarkdown rehypePlugins={[rehypeRaw]}>{readme}</ReactMarkdown>
+        )}
       </Modal>
     </Card>
   )

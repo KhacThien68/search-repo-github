@@ -9,6 +9,7 @@ import {
   changePageSize,
   changeSearchCharacters,
   selectData,
+  selectIsLoading,
   selectPage,
   selectPageSize,
   selectSearchCharacters,
@@ -17,6 +18,7 @@ import {
 import { UserList } from './userList'
 import { changeActiveMenu } from '../../app/slice'
 import LogoIcon from '../../assets/logo/logoIcon.png'
+import Spinner from '../../components/Spinner'
 
 export default function HomePage() {
   const dispatch = useAppDispatch()
@@ -28,6 +30,7 @@ export default function HomePage() {
   const usersData = useAppSelector(selectData)
   const page = useAppSelector(selectPage)
   const pageSize = useAppSelector(selectPageSize)
+  const isLoading = useAppSelector(selectIsLoading)
 
   const onChangePagination: PaginationProps['onChange'] = (
     current,
@@ -93,7 +96,7 @@ export default function HomePage() {
           <div>Số kết quả tìm kiếm được: {totalRecords}</div>
         </>
       )}
-      <UserList value={usersData} />
+      {isLoading ? <Spinner /> : <UserList value={usersData} />}
       <Pagination
         showSizeChanger
         onChange={onChangePagination}
